@@ -9,6 +9,7 @@ Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at
 | Version | Tag | Upstream commit |
 |---------|-----|-----------------|
 | v1.0.0 | [`v1.0.0`](https://github.com/chainguard-actions/actions-cool-ci-notice/tree/v1.0.0) | [`90712aa`](https://github.com/actions-cool/ci-notice/commit/90712aa4eeff1aacb7a6351cdd10b54167e2fb9b) |
+| v1.1.0 | [`v1.1.0`](https://github.com/chainguard-actions/actions-cool-ci-notice/tree/v1.1.0) | [`f466526`](https://github.com/actions-cool/ci-notice/commit/f4665263bbbfc134def3bc1915128900e9fbaa3b) |
 | v1.1.1 | [`v1.1.1`](https://github.com/chainguard-actions/actions-cool-ci-notice/tree/v1.1.1) | [`a53fd6b`](https://github.com/actions-cool/ci-notice/commit/a53fd6b8dcf8aa31dc62acd902ddc0c7b082c877) |
 
 ## Privacy
