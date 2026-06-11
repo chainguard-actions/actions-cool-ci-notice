@@ -1,0 +1,28 @@
+name: Test notice options
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        with:
+          token: ${{ github.token }}
+          ci: |
+            echo "CI step running"
+          notice-types: issue
+          notice-title: "CI Notice Test Title"
+          notice-body: "CI Notice Test Body"
+        continue-on-error: true
+      - name: Assert result output is set
+        env:
+          RESULT: ${{ steps.action.outputs.result }}
+        run: |
+          echo "result: $RESULT"
+          if [ -z "$RESULT" ]; then
+            echo "FAIL: expected result output to be set"
+            exit 1
+          fi
+          echo "PASS"
