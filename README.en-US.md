@@ -1,9 +1,9 @@
-# 😱 CI 通知
+# 😱 CI 通知 ( Translation help )
 
-简体中文 | [English](./README.en-US.md)
+[简体中文](./README.md) | English
 
 ![](https://img.shields.io/github/workflow/status/actions-cool/ci-notice/CI?style=flat-square)
-[![](https://img.shields.io/badge/marketplace-ci--notice-blueviolet?style=flat-square)](https://github.com/marketplace/actions/ci-notice)
+[![](https://img.shields.io/badge/marketplace-ci-notice-blueviolet?style=flat-square)](https://github.com/marketplace/actions/ci-notice)
 [![](https://img.shields.io/github/v/release/actions-cool/ci-notice?style=flat-square&color=orange)](https://github.com/actions-cool/ci-notice/releases)
 
 ## 🏞 预览
@@ -16,7 +16,7 @@
 
 https://github.com/actions-cool/ci-notice/issues/3
 
-## 🚀 如何使用？
+## 🚀 如果使用？
 
 > 你可以参照当前项目的例子来使用：https://github.com/actions-cool/ci-notice/blob/main/.github/workflows/ci-notice.yml
 >
@@ -36,7 +36,7 @@ jobs:
       - name: checkout
         uses: actions/checkout@main
 
-      - uses: actions-cool/ci-notice@v1.0.1
+      - uses: actions-cool/ci-notice@v1.0.0
         with:
           ci: |
             npm install
@@ -65,7 +65,7 @@ jobs:
 
 ### outputs
 
-输出结果 `result`，`success` 或者 `failed`，可自定义结果操作。
+输出结果 `result`，根据结果可自定义操作。
 
 ## ⚡ 反馈
 
@@ -85,7 +85,3 @@ jobs:
 ## LICENSE
 
 [MIT](./LICENSE)
-
-## Privacy
-
-This Action contacts Chainguard's licensing server to verify authorization. Connection metadata (IP address, GitHub repository identifier, timestamp, and any metadata encoded in the auth token) is transmitted to Chainguard, Inc. even if authorization is denied in accordance with our [Privacy Notice](https://www.chainguard.dev/legal/privacy-notice)
