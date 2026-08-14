@@ -1,0 +1,29 @@
+name: Test issue labels and assignees inputs
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        with:
+          token: ${{ github.token }}
+          ci: echo "hello"
+          notice-types: issue
+          issue-labels: "bug,ci-failure"
+          issue-assignees: "xrkffgg"
+          notice-title: "CI Notice Test"
+          notice-body: "Test issue body"
+        continue-on-error: true
+      - name: Assert result output is set
+        env:
+          RESULT: ${{ steps.action.outputs.result }}
+        run: |
+          echo "result: $RESULT"
+          if [ -z "$RESULT" ]; then
+            echo "FAIL: expected result output to be set"
+            exit 1
+          fi
+          echo "PASS: result output is set to '$RESULT'"
