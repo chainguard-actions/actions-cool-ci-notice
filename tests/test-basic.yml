@@ -1,9 +1,12 @@
-name: Test basic usage
+name: Test basic usage - CI success
 on:
   workflow_dispatch:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ github.token }}
+      GITHUB_REPOSITORY: test-owner/test-repo
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - id: action
@@ -11,7 +14,8 @@ jobs:
         with:
           token: ${{ github.token }}
           ci: |
-            echo "CI step running"
+            echo "CI step 1"
+            echo "CI step 2"
         continue-on-error: true
       - name: Assert result output is set
         env:
@@ -19,7 +23,17 @@ jobs:
         run: |
           echo "result: $RESULT"
           if [ -z "$RESULT" ]; then
-            echo "FAIL: expected result output to be set"
+            echo "FAIL: expected result output to be non-empty"
+            exit 1
+          fi
+          echo "PASS: result output is '$RESULT'"
+      - name: Assert result is success
+        env:
+          RESULT: ${{ steps.action.outputs.result }}
+        run: |
+          echo "result: $RESULT"
+          if [ "$RESULT" != "success" ]; then
+            echo "FAIL: expected 'success' but got '$RESULT'"
             exit 1
           fi
           echo "PASS"

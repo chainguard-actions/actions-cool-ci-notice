@@ -1,0 +1,40 @@
+name: Test CI failure detection
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        with:
+          token: ${{ github.token }}
+          ci: |
+            echo "running a failing command"
+            exit 1
+        # The action should not fail the workflow even when CI fails
+        # It captures the result and reports it
+        continue-on-error: true
+      - name: Assert result output is set
+        env:
+          ACTUAL: ${{ steps.action.outputs.result }}
+        run: |
+          echo "actual: $ACTUAL"
+          if [ -z "$ACTUAL" ]; then
+            echo "FAIL: expected result output to be set even on CI failure"
+            exit 1
+          fi
+          echo "PASS: result output is set to: $ACTUAL"
+      - name: Assert result indicates failure
+        env:
+          ACTUAL: ${{ steps.action.outputs.result }}
+        run: |
+          echo "actual: $ACTUAL"
+          LOWER="$(echo "$ACTUAL" | tr '[:upper:]' '[:lower:]')"
+          if echo "$LOWER" | grep -qE 'fail|error|false'; then
+            echo "PASS: result correctly indicates failure"
+          else
+            echo "FAIL: expected failure result but got: $ACTUAL"
+            exit 1
+          fi

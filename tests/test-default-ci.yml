@@ -1,0 +1,26 @@
+name: Test default CI commands
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        with:
+          token: ${{ github.token }}
+          # Use default ci input (npm install && npm run build)
+          # These will likely fail since there's no package.json in the test env
+          # but the action should still produce a result output
+        continue-on-error: true
+      - name: Assert result output is set regardless of CI outcome
+        env:
+          ACTUAL: ${{ steps.action.outputs.result }}
+        run: |
+          echo "actual: $ACTUAL"
+          if [ -z "$ACTUAL" ]; then
+            echo "FAIL: expected result output to be set"
+            exit 1
+          fi
+          echo "PASS: result output is set to: $ACTUAL"

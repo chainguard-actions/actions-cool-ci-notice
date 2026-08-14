@@ -1,0 +1,29 @@
+name: Test notification inputs coverage
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        with:
+          token: ${{ github.token }}
+          ci: echo "hello"
+          notice-types: issue
+          dingding-token: ""
+          notice-title: "CI Notice Test"
+          notice-body: "Test notification body"
+          issue-labels: "ci-failure"
+          issue-assignees: ""
+      - name: Assert result output is present
+        env:
+          ACTUAL: ${{ steps.action.outputs.result }}
+        run: |
+          echo "actual: $ACTUAL"
+          if [ -z "$ACTUAL" ]; then
+            echo "FAIL: expected result output to be non-empty"
+            exit 1
+          fi
+          echo "PASS: result=$ACTUAL"

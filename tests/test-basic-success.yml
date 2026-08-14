@@ -1,0 +1,38 @@
+name: Test basic CI success
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        with:
+          token: ${{ github.token }}
+          ci: |
+            echo "hello world"
+            echo "CI step complete"
+      - name: Assert result output is set
+        env:
+          ACTUAL: ${{ steps.action.outputs.result }}
+        run: |
+          echo "actual: $ACTUAL"
+          if [ -z "$ACTUAL" ]; then
+            echo "FAIL: expected result output to be set"
+            exit 1
+          fi
+          echo "PASS: result output is set to: $ACTUAL"
+      - name: Assert result indicates success
+        env:
+          ACTUAL: ${{ steps.action.outputs.result }}
+        run: |
+          echo "actual: $ACTUAL"
+          # The result should indicate success (pass/success/true or similar)
+          LOWER="$(echo "$ACTUAL" | tr '[:upper:]' '[:lower:]')"
+          if echo "$LOWER" | grep -qE 'pass|success|true|ok'; then
+            echo "PASS: result indicates success"
+          else
+            echo "FAIL: expected success result but got: $ACTUAL"
+            exit 1
+          fi
