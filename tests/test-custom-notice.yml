@@ -1,0 +1,36 @@
+name: Test custom notice inputs
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        with:
+          token: ${{ github.token }}
+          ci: |
+            echo "Custom CI step"
+          notice-title: "Test Notice Title"
+          notice-body: "Test Notice Body"
+      - name: Assert result output exists
+        env:
+          RESULT: ${{ steps.action.outputs.result }}
+        run: |
+          echo "result: $RESULT"
+          if [ -z "$RESULT" ]; then
+            echo "FAIL: expected result output to be non-empty"
+            exit 1
+          fi
+          echo "PASS: result output is '$RESULT'"
+      - name: Assert result is success
+        env:
+          RESULT: ${{ steps.action.outputs.result }}
+        run: |
+          echo "result: $RESULT"
+          if [ "$RESULT" != "success" ]; then
+            echo "FAIL: expected result to be 'success', got '$RESULT'"
+            exit 1
+          fi
+          echo "PASS"

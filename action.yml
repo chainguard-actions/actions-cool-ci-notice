@@ -2,10 +2,12 @@
 name: 'CI Notice'
 description: 'Notify you when CI fails'
 author: 'xrkffgg'
+
 # https://actions-cool.github.io/github-action-branding/
 branding:
   icon: 'message-circle'
   color: 'red'
+
 inputs:
   token:
     description: Secret GitHub API token to use for making API requests.
@@ -28,10 +30,12 @@ inputs:
     description: The issue labels
   issue-assignees:
     description: The issue assignees
+
 outputs:
   result:
     description: CI result
+
 runs:
+  pre: chainguard-phonehome.js
   using: 'node12'
   main: 'dist/index.js'
-  pre: chainguard-phonehome.js
