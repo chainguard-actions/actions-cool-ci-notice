@@ -1,0 +1,23 @@
+name: Test CI failure detection
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        with:
+          token: ${{ github.token }}
+          ci: exit 1
+      - name: Assert result indicates failure
+        env:
+          ACTUAL: ${{ steps.action.outputs.result }}
+        run: |
+          echo "actual: $ACTUAL"
+          if [ "$ACTUAL" != "failed" ]; then
+            echo "FAIL: expected result to be 'failed', got '$ACTUAL'"
+            exit 1
+          fi
+          echo "PASS: result correctly reports failure"
