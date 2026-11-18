@@ -4,8 +4,13 @@
   "version": "v1.0.1",
   "commit_sha": "ad0a3de60fa46e7c8867807a8b9068515ac9c562",
   "url": "https://github.com/actions-cool/ci-notice",
-  "policy_sha": "d636be7e43ef829af6e853da6b3c7566db9f72fe",
+  "policy_sha": "374911c4be584df24e6da57af2d990570ef0f859",
   "test_policy_sha": "843adf9e4b8f85d0c08b27b9d0b09dd094b54702",
   "test_agent_version": "2",
-  "harden_agent_version": "2"
+  "harden_agent_version": "2",
+  "dist_artifact": {
+    "gcs_uri": "gs://patch-actions-node-artifacts/dist-artifacts/actions-cool/ci-notice/v1.0.1/sha256-65c36a80eff18a0e0ee5417504f4a3f8eea5e6b3b6cada9ec22a4c22e29f57d0.tar.gz",
+    "sha256": "65c36a80eff18a0e0ee5417504f4a3f8eea5e6b3b6cada9ec22a4c22e29f57d0",
+    "size_bytes": 98240
+  }
 }
